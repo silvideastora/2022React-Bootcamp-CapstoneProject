@@ -42,5 +42,5 @@ InputForm.propTypes = {
   type:PropTypes.string.isRequired,
   name:PropTypes.string.isRequired,
   errorAlert:PropTypes.string.isRequired,
-  regex:PropTypes.func.isRequired,
+  regex:PropTypes.any.isRequired,
 }
