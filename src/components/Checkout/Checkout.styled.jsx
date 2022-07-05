@@ -1,21 +1,50 @@
 import styled, {css} from 'styled-components';
 
-export const FormWrapper = styled.main`
-max-width: 800px;
+export const FormWrapper = styled.div`
+max-width: 1200px;
 width: 90%
-margin: auto;
-padding: 40px;
+height: 600px;
+margin: 0 20px;
+padding:0 20px;
+display: flex;
+justify-content: center;
+`;
+export const OrderSummary = styled.div`
+
+div {
+display: flex;
+justify-content: flex-end;
+align-items: center;
+margin-left: 20px;
+width: 500px;
+height: 100px;
+padding: 20px;
+background: white;
+border-top: 1px solid #eee;
+}
+
+p {
+    
+    font-size: 16px;
+    color: gray;
+    margin-left: 20px;
+}
+span {
+    justify-content: flex-end;
+    align-items: space-between;
+    font-size: 20px;
+    font-weight: 400;
+    margin-left: 20px;
+}
 
 `;
 
 export const Form = styled.form`
 display: grid;
-grid-template-columns: 1fr 1fr;
+grid-template-columns: 1fr;
 gap: 20px;
 
-@media (max-width: 800px){
-    grid-template-columns: 1fr;
-}
+
 `;
 export const Label = styled.label`
 display: block;

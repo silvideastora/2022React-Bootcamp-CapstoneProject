@@ -12,16 +12,26 @@ import "./App.css";
 import { ShoppingCartContext } from './contexts/ShoppingCart';
 
 export default function App() {
+  
   const [items , setItems] = useState([]);
-  const updateItems = newItems => {
-    setItems([...newItems])
+  
+  
+  const addItem = newItem => {
+    const index = items.findIndex(item => item.id === newItem.id)
+    if(index === -1) {
+      setItems([...items, newItem])
+    }
+    
   }
-  const addItem = item => {
-    setItems([...items, item])
+  const deleteItem = itemId => {
+    const newItems = items.filter(item => (
+      itemId !== item.id
+    ))
+    setItems(newItems)
   }
   return (
     <div className="App">
-      <ShoppingCartContext.Provider value={{updateItems, items, addItem }}>
+      <ShoppingCartContext.Provider value={{items, addItem, deleteItem }}>
         <Header/>
         <Routes>
           <Route path="/" element={<Home/>}/>

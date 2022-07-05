@@ -90,8 +90,8 @@ export default function ProductDetail() {
               <h2>Caracteristics:</h2>
               <table>
                 <thead>
-                {productDetail.data.specs.map((spec) => (
-                  <tr>
+                {productDetail.data.specs.map((spec,index ) => (
+                  <tr key={index}>
                     <th>
                     <p key={spec.spec_name}>
                       {spec.spec_name}</p>

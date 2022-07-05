@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from "react";
+import { React, useState, useEffect, useContext,useCallback } from "react";
 import { ShoppingCartContext } from "../../contexts/ShoppingCart";
 import { ShoppingCartWrapper, CartItem, UiPannel } from "./ShoppingCart.styled";
 import { Link } from 'react-router-dom';
@@ -15,11 +15,11 @@ export default function ShopingCart() {
     setTotalPrice(total);
   }, [productsSubTotal]);
 
-  const calculateTotalByProduct = (productId, quantity, price) => {
+  const calculateTotalByProduct = useCallback((productId, quantity, price) => {
     setProductsSubTotal(prev => ({...prev, 
       [productId]: quantity * price,
     }))
-  }
+  }, []);
 
 
   return (
@@ -28,6 +28,7 @@ export default function ShopingCart() {
         <CartItemDetail 
         item={item} 
         index={index} 
+        key={item.id}
         calculateTotalByProduct={calculateTotalByProduct} />
       ))}
       <UiPannel>
@@ -60,7 +61,8 @@ const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
     selectedQuantity,
   } = item;
   const [quantity, setQuantity] = useState(selectedQuantity || 1);
-  const { items, updateItems } = useContext(ShoppingCartContext);
+  const { deleteItem } = useContext(ShoppingCartContext);
+  const [error , setError] = useState(false);
 
   const add = () => {
     setQuantity((prev) => prev + 1);
@@ -70,19 +72,19 @@ const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
       setQuantity(quantity - 1);
     }
   };
-  /*useEffect(() => {
-    const newItems = [...items];
-    newItems[index] = {
-      ...item,
-      selectedQuantity: quantity,
-      total: quantity * price,
-    };
-    updateItems(newItems);
-  }, [quantity]);*/
+  const removeItem = () => {
+    deleteItem(id)
+  }
 
   useEffect(() => {
+    if(quantity > stock || quantity <= 0){
+      setError(true)
+    } else {
+      setError(false)
+    }
     calculateTotalByProduct(id, quantity, price)
-  },[quantity])
+    return () => calculateTotalByProduct(id, 0, price)
+  },[quantity,  id, price, stock,calculateTotalByProduct])
   
 
   return (
@@ -94,15 +96,19 @@ const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
         <div className="item-description">
           <h2 className="item-title">{name}</h2>
           <h3 className="subtitle">{short_description}</h3>
-          <button>Delete</button>
+          <button onClick={removeItem}>Delete</button>
         </div>
       </div>
       <div className="quantity-selector">
         <div className="quantity-selector-container">
           <button onClick={substract}>-</button>
-          <input type="text" value={quantity} />
+          <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
           <button onClick={add}>+</button>
-          <p>{stock} available</p>
+          <p>{stock - quantity} available</p>
+          {error && (
+            <small>Error</small>
+          )}
+          
         </div>
       </div>
       <div className="item-price">
