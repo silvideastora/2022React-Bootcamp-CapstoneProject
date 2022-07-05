@@ -91,14 +91,13 @@ export default function Checkout() {
       <OrderSummary>
         {Object.values(items).map((item) => (
           <div key={item.id}>
-            <p className="item-name">{item.data.name}</p>
-            <p className="item-quantity">{item.quantity}</p>
-            <p className="item-price">${item.subtotal}</p>
+            <p>{item.data.name}</p>
+            <p>{item.quantity}</p>
+            <p>${item.subtotal}</p>
           </div>
         ))}
-
         <div>
-          <span className="summary-label">Costo Total</span>
+          <span className="summary-label">Total</span>
           <span className="summary-label">
             $
             {Object.values(items).reduce(
@@ -108,8 +107,8 @@ export default function Checkout() {
           </span>
         </div>
         <div>
-          <button>Place Order</button>
-          <button>Go back to cart</button>
+          <Button>Place Order</Button>
+          <Button>Go back to cart</Button>
         </div>
       </OrderSummary>
     </FormWrapper>

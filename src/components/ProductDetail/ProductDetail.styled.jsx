@@ -67,7 +67,7 @@ border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 200px;
     height: 48px;
     margin-top: 20px;
     background: gray;

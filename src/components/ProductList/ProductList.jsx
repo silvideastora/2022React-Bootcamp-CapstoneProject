@@ -23,8 +23,6 @@ export default function ProductList() {
   const { data: categoriesData } = useFeaturedCategories();
   const { data, isLoading } = useProducts('', currentPage, selectedCategories);
   
-  
-
   useEffect(() => {
     if (data.results) {
       setProducts(data.results);
@@ -32,15 +30,14 @@ export default function ProductList() {
   }, [data]);
 
   useEffect(() => {
-
     if (categoriesData.results) {
       setCategories(categoriesData.results);
       if (!category) {
         setSelectedCategories([...categoriesData.results.map(c => c.id)]);
       }
     }
-
   }, [categoriesData.results, category]);
+  
 
   const clickHandler = (categoryName) => {
     const indexToRemove = selectedCategories.indexOf(categoryName);

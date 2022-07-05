@@ -1,5 +1,6 @@
 import React from 'react'
 import {Label, InputGroup, Input, ErrorAlert} from '../Checkout/Checkout.styled';
+import PropTypes from 'prop-types';
 
 export default function InputForm( 
     {state, setState,label, placeholder, type, name,errorAlert,regex}
@@ -7,14 +8,10 @@ export default function InputForm(
     const onChange = (e) => {
         setState({...state, campo: e.target.value});
     }
-   const validate = () => {
-    if(regex){
-        if(regex.test(state.campo)){
-            setState({...state, valid:'true'});
-        } else {
-            setState({...state, valid:'false'});
-        }
-    }
+    const validate = () => {
+      if(regex && regex.test()){
+        setState({...state, valid:'true'});
+      }
     }
     return (
       <div>
@@ -35,4 +32,15 @@ export default function InputForm(
 
       </div>
     );
+}
+
+InputForm.propTypes = {
+  state: PropTypes.object.isRequired,
+  setState: PropTypes.func.isRequired,
+  label:PropTypes.string.isRequired,
+  placeholder:PropTypes.string.isRequired,
+  type:PropTypes.string.isRequired,
+  name:PropTypes.string.isRequired,
+  errorAlert:PropTypes.string.isRequired,
+  regex:PropTypes.func.isRequired,
 }

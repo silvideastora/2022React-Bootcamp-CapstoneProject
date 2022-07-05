@@ -2,6 +2,7 @@ import { React, useState, useEffect, useContext } from "react";
 import { ShoppingCartContext } from "../../contexts/ShoppingCart";
 import { ShoppingCartWrapper, CartItem, UiPannel } from "./ShoppingCart.styled";
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 export default function ShopingCart() {
   const { items } = useContext(ShoppingCartContext);
@@ -13,9 +14,6 @@ export default function ShopingCart() {
     }, 0);
     setTotalPrice(total); 
   }, [items]);
-
-
-
 
   return (
     <ShoppingCartWrapper>
@@ -42,7 +40,7 @@ export default function ShopingCart() {
     </ShoppingCartWrapper>
   );
 }
-const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
+const CartItemDetail = ({ item }) => {
   const {
     data: {
       name,
@@ -99,12 +97,11 @@ const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
           <button onClick={substract}>-</button>
           <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
           <button onClick={add}>+</button>
-          <p>{stock - quantity} available</p>
+        </div>
+        <p>{stock - quantity} available</p>
           {error && (
             <small>Error</small>
           )}
-          
-        </div>
       </div>
       <div className="item-price">
         <span className="item-tag-price">$ {price * quantity}</span>
@@ -112,3 +109,7 @@ const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
     </CartItem>
   );
 };
+
+CartItemDetail.propTypes = {
+  item: PropTypes.object,
+}
