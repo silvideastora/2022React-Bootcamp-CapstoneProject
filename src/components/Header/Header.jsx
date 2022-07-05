@@ -47,7 +47,7 @@ export default function Header() {
                 <Link to="/cart">
                     <img src={icon} alt="cart-icon" className="img-icon"/>
                 </Link>
-                <span className="icon-quantity">{items.length}</span>
+                <span className="icon-quantity">{Object.values(items).length}</span>
             </CartWrapper>
         </HeaderWrapper>
     )

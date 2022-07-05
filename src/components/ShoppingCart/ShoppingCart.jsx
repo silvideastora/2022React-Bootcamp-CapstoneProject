@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext,useCallback } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { ShoppingCartContext } from "../../contexts/ShoppingCart";
 import { ShoppingCartWrapper, CartItem, UiPannel } from "./ShoppingCart.styled";
 import { Link } from 'react-router-dom';
@@ -6,30 +6,25 @@ import { Link } from 'react-router-dom';
 export default function ShopingCart() {
   const { items } = useContext(ShoppingCartContext);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [productsSubTotal, setProductsSubTotal] = useState({});
 
   useEffect(() => {
-    const total = Object.values(productsSubTotal).reduce((total, subTotal) => {
-      return total + subTotal;
+     const total = Object.values(items).reduce((total, item) => {
+      return total + item.subtotal;
     }, 0);
-    setTotalPrice(total);
-  }, [productsSubTotal]);
+    setTotalPrice(total); 
+  }, [items]);
 
-  const calculateTotalByProduct = useCallback((productId, quantity, price) => {
-    setProductsSubTotal(prev => ({...prev, 
-      [productId]: quantity * price,
-    }))
-  }, []);
+
 
 
   return (
     <ShoppingCartWrapper>
-      {items.map((item, index) => (
+      {Object.values(items).map((item, index) => (
         <CartItemDetail 
         item={item} 
         index={index} 
         key={item.id}
-        calculateTotalByProduct={calculateTotalByProduct} />
+         />
       ))}
       <UiPannel>
         <div className="summary">
@@ -61,7 +56,7 @@ const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
     selectedQuantity,
   } = item;
   const [quantity, setQuantity] = useState(selectedQuantity || 1);
-  const { deleteItem } = useContext(ShoppingCartContext);
+  const { deleteItem, updateItem } = useContext(ShoppingCartContext);
   const [error , setError] = useState(false);
 
   const add = () => {
@@ -82,9 +77,9 @@ const CartItemDetail = ({ item, index , calculateTotalByProduct}) => {
     } else {
       setError(false)
     }
-    calculateTotalByProduct(id, quantity, price)
-    return () => calculateTotalByProduct(id, 0, price)
-  },[quantity,  id, price, stock,calculateTotalByProduct])
+    updateItem(id, quantity, price * quantity)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[quantity,  id, price, stock])
   
 
   return (

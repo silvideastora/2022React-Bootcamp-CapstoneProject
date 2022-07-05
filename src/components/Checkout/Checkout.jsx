@@ -1,4 +1,5 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
+import { ShoppingCartContext } from "../../contexts/ShoppingCart";
 import {
   FormWrapper,
   Form,
@@ -12,8 +13,8 @@ import {
 } from "../Checkout/Checkout.styled";
 import InputForm from "../InputForm/InputForm";
 
-
 export default function Checkout() {
+  const { items } = useContext(ShoppingCartContext);
   const [name, setName] = useState({ campo: "", valid: null });
   const [email, setEmail] = useState({ campo: "", valid: null });
   const [zipCode, setZipCode] = useState({ campo: "", valid: null });
@@ -88,23 +89,29 @@ export default function Checkout() {
         </ButtonContainer>
       </Form>
       <OrderSummary>
-          <div>
-            <p className="item-name">Sillon de piel con cojin</p>
-            <p className="item-quantity">Cantidad: 1</p>
-            <p className ="item-price">$250</p>
+        {Object.values(items).map((item) => (
+          <div key={item.id}>
+            <p className="item-name">{item.data.name}</p>
+            <p className="item-quantity">{item.quantity}</p>
+            <p className="item-price">${item.subtotal}</p>
+          </div>
+        ))}
+
+        <div>
+          <span className="summary-label">Costo Total</span>
+          <span className="summary-label">
+            $
+            {Object.values(items).reduce(
+              (total, item) => total + item.subtotal,
+              0
+            )}
+          </span>
         </div>
         <div>
-            <span className="summary-label">Costo Total</span>
-            <span className="summary-label">$1300</span>
+          <button>Place Order</button>
+          <button>Go back to cart</button>
         </div>
-        <div>
-            <button>Place Order</button>
-            <button>Go back to cart</button>
-        </div>
-        
       </OrderSummary>
-
-
     </FormWrapper>
   );
 }
