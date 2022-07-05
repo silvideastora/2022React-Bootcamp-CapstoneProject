@@ -77,7 +77,7 @@ export default function ProductDetail() {
               <p className="description">
               {productDetail.data.short_description}
               </p>
-              <input type="number" placeholder="Numbers" />
+              <span className="stock">Stock: {productDetail.data.stock}</span>
               <button onClick={addToCart} 
                       className="add-cart">
                 {" "}

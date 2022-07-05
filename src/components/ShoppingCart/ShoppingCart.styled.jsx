@@ -111,6 +111,12 @@ grid-row-gap: 0px;
     width: 1fr;
     text-align: center;
 
+    p {
+        font-size:12px;
+    }
+    small {
+        color: crimson;
+    }
 }
 .quantity-selector-container {
     display: inline-block;

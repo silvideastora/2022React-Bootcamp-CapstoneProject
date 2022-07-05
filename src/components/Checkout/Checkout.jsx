@@ -12,6 +12,7 @@ import {
   OrderSummary,
 } from "../Checkout/Checkout.styled";
 import InputForm from "../InputForm/InputForm";
+import {useNavigate} from 'react-router-dom';
 
 export default function Checkout() {
   const { items } = useContext(ShoppingCartContext);
@@ -25,6 +26,10 @@ export default function Checkout() {
     email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     zipcode: /^\d{5,8}$/, // 5 a 8 numeros.
   };
+  const navigate = useNavigate();
+  const clickHandler = () => {
+    navigate(`/cart`)
+}
 
   return (
     <FormWrapper>
@@ -91,14 +96,13 @@ export default function Checkout() {
       <OrderSummary>
         {Object.values(items).map((item) => (
           <div key={item.id}>
-            <p className="item-name">{item.data.name}</p>
-            <p className="item-quantity">{item.quantity}</p>
-            <p className="item-price">${item.subtotal}</p>
+            <p>{item.data.name}</p>
+            <p>{item.quantity}</p>
+            <p>${item.subtotal}</p>
           </div>
         ))}
-
         <div>
-          <span className="summary-label">Costo Total</span>
+          <span className="summary-label">Total</span>
           <span className="summary-label">
             $
             {Object.values(items).reduce(
@@ -108,8 +112,9 @@ export default function Checkout() {
           </span>
         </div>
         <div>
-          <button>Place Order</button>
-          <button>Go back to cart</button>
+          <Button>Place Order</Button>
+          <Button onClick={clickHandler}>Go back to cart</Button>
+          
         </div>
       </OrderSummary>
     </FormWrapper>

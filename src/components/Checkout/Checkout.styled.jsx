@@ -4,23 +4,26 @@ export const FormWrapper = styled.div`
 max-width: 1200px;
 width: 90%
 height: 600px;
-margin: 0 20px;
-padding:0 20px;
+margin: 0 auto;
 display: flex;
-justify-content: center;
+justify-content: space-between;
+
+@media (max-width: 768px) {
+    flex-direction: column;
+}
 `;
 export const OrderSummary = styled.div`
 
 div {
 display: flex;
-justify-content: flex-end;
+justify-content: space-between;
 align-items: center;
 margin-left: 20px;
 width: 500px;
 height: 100px;
 padding: 20px;
 background: white;
-border-top: 1px solid #eee;
+border-top: 1px solid gainsboro;
 }
 
 p {
@@ -41,9 +44,13 @@ span {
 
 export const Form = styled.form`
 display: grid;
-grid-template-columns: 1fr;
-gap: 20px;
-
+grid-template-columns: repeat(2, 300px);
+gap: 10px;
+ @media(max-width: 768px){
+   display:flex;
+   flex-direction: column;
+   padding: 30px;
+ }
 
 `;
 export const Label = styled.label`
@@ -125,8 +132,10 @@ export const ImageIcon = styled.image`
  align-items: center;
  justify-content: center;
  grid-column: span 2;
+
  `;
   export const Button = styled.button`
+  margin-top: 10px;
   height: 45px;
   color: white;
   line-height: 45px;
@@ -143,6 +152,7 @@ export const ImageIcon = styled.image`
     box-shadow:0 0 40px 40px slateblue inset;
   }
   `;
+
 
   export const SuccessComment = styled.p`
   font-size: 14px;

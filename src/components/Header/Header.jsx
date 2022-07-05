@@ -12,7 +12,7 @@ export default function Header() {
     const navigate = useNavigate();
 
     const {items} = useContext(ShoppingCartContext);
-    
+    const itemsLength = Object.values(items).length;
     const clickHandler = () => {
         navigate(`/search?q=${userInput}`)
     }
@@ -47,10 +47,9 @@ export default function Header() {
                 <Link to="/cart">
                     <img src={icon} alt="cart-icon" className="img-icon"/>
                 </Link>
-                <span className="icon-quantity">{Object.values(items).length}</span>
+                    <span className="icon-quantity" itemslength={'block'}>{itemsLength}</span>
             </CartWrapper>
         </HeaderWrapper>
     )
 };
-
 
