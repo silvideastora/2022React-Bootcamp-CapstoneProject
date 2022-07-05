@@ -153,6 +153,7 @@ export const ImageIcon = styled.image`
   }
   `;
 
+
   export const SuccessComment = styled.p`
   font-size: 14px;
   color: lightseagreen;
