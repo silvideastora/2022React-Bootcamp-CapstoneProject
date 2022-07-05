@@ -24,9 +24,8 @@ export default function Products() {
           {products.map((product) => {
             const {name,sku,price, category:{slug}, mainimage:{url}} = product.data;
             return (
-            <Link to={`/products/${product.id}`}>
+            <Link to={`/products/${product.id}`} key={sku}>
               <Card
-                key={sku}
                 className="card"
               >
                 <img src={url} alt="product"/>

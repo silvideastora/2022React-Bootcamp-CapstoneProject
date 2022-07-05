@@ -19,8 +19,9 @@ export default function Categories() {
             {!isLoading && (  
             <CardContainer>
                 {categories.map((category, index) => (
-                <Link to={`/products?category=${category.id}` }>
-                <Card key={index} 
+                <Link to={`/products?category=${category.id}`} 
+                    key={index} >
+                <Card 
                     style={{ backgroundImage:`url(${category.data.main_image.url})` }}>
                     <div className="card-text" >
                         <h3>{category.data.name}</h3>
