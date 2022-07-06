@@ -96,11 +96,11 @@ const CartItemDetail = ({ item }) => {
         <div className="quantity-selector-container">
           <button onClick={substract}>-</button>
           <input type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)}/>
-          <button onClick={add}>+</button>
+          <button disabled={quantity === stock } onClick={add}>+</button>
         </div>
         <p>{stock - quantity} available</p>
           {error && (
-            <small>Error</small>
+            <small>Not available</small>
           )}
       </div>
       <div className="item-price">
